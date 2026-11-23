@@ -1,0 +1,18 @@
+# Dependências
+node_modules/
+
+# Segredos — nunca publicar
+.env
+.env.*
+!.env.example
+
+# Fotos com pessoas (não publicar)
+public/principal_page/images/team_photo.jpg
+public/principal_page/images/juanIrao.jpeg
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+coverage/

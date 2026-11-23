@@ -1,0 +1,505 @@
+/* --- UTILIDADES --- */
+.cal-mngr-hidden {
+    display: none !important;
+}
+
+/* --- ESTRUCTURA PRINCIPAL --- */
+.cal-mngr-wrapper {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding: 15px 20px; /* Reducido para ganar espacio en pantalla */
+    background-color: #f4f7f9;
+    
+    /* Magia Flexbox: Ocupa exactamente el 100% de la ventana sin scroll */
+    height: 100%; 
+    box-sizing: border-box;
+    color: #1e3a8a;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Corta de raíz el scroll de la página entera */
+}
+
+.cal-mngr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px; /* Márgenes más pequeños */
+    flex-shrink: 0; /* Evita que el header se aplaste si la pantalla es enana */
+}
+
+.cal-mngr-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.cal-mngr-title {
+    font-size: 24px; /* Título ligeramente más pequeño */
+    font-weight: 800;
+    margin: 0;
+}
+
+.cal-mngr-filtro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cal-mngr-filtro label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.cal-mngr-filtro select {
+    border: 1px solid #cbd5e1;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    outline: none;
+    cursor: pointer;
+}
+
+/* --- GRILLA --- */
+.cal-mngr-grid-container {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    
+    /* Magia Flexbox: Se expande ocupando todo el espacio libre entre el header y el footer */
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    min-height: 0; 
+}
+
+.cal-mngr-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    padding: 8px 0;
+    font-size: 13px;
+    font-weight: 700;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    flex-shrink: 0;
+}
+
+.cal-mngr-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    
+    /* Magia Grid: Divide el hueco disponible en 6 filas exactamente iguales, adiós al scroll */
+    grid-template-rows: repeat(6, 1fr); 
+    flex: 1;
+    min-height: 0;
+}
+
+.cal-mngr-celda {
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 4px;
+    text-align: right;
+    font-weight: bold;
+    color: #475569;
+    display: flex;
+    flex-direction: column;
+    
+    /* Si un día tiene 10 eventos, solo hará scroll DENTRO del cuadrito de ese día */
+    overflow-y: auto; 
+}
+
+.cal-mngr-celda span {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+/* Barra de scroll de las celdas invisible y sutil */
+.cal-mngr-celda::-webkit-scrollbar { width: 4px; }
+.cal-mngr-celda::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+
+/* --- FOOTER --- */
+.cal-mngr-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cal-mngr-controles {
+    display: flex;
+    gap: 8px;
+}
+
+.cal-mngr-acoes {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cal-btn-icon {
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.cal-mngr-btn {
+    background-color: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 13px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cal-mngr-btn:hover { background-color: #0284c7; }
+
+/* --- MODAL --- */
+.modal-mngr-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-mngr-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 550px;
+    max-width: 90%;
+    max-height: 95vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.modal-mngr-header-bg {
+    background: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.modal-mngr-header-bg h3 {
+    color: #0a3d80;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
+.modal-mngr-body-bg {
+    background: none;
+    padding: 0;
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-tab {
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+    background: transparent;
+    color: white;
+    border: 1px solid #94a3b8;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal-tab.active { background: white; color: #1e293b; border: none; }
+
+.modal-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.modal-row:last-child { margin-bottom: 0; }
+
+.modal-input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-input-group label {
+    color: #0a3d80;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.modal-input-group input, .modal-input-group select {
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+    color: #0a3d80;
+    font-size: 14px;
+    width: 100%;
+    background-color: #f8fafc;
+    box-sizing: border-box;
+}
+
+.modal-input-group input:focus, .modal-input-group select:focus {
+    border-color: #0a3d80;
+    background-color: #ffffff;
+}
+
+.modal-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    outline: none;
+    background-color: #f8fafc;
+    color: #0a3d80;
+    resize: none;
+    margin-top: 0;
+    box-sizing: border-box;
+}
+
+.modal-textarea:focus { border-color: #0a3d80; background-color: #ffffff; }
+.modal-textarea::placeholder { color: #94a3b8; }
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-cancelar {
+    padding: 12px 20px;
+    background: #ffffff;
+    color: #627d98;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-cancelar:hover { background: #f4f6fa; }
+
+.btn-confirmar {
+    background-color: #0a3d80;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-confirmar:hover { background-color: #052654; }
+
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cal-mngr-popup {
+    position: fixed;
+    z-index: 100000;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(10, 61, 128, 0.13);
+    min-width: 240px;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.cal-mngr-popup-header {
+    background: #0a3d80;
+    padding: 10px 14px;
+}
+
+.cal-mngr-popup-header h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cal-mngr-popup-body {
+    padding: 10px 14px;
+}
+
+.cal-mngr-popup p {
+    margin: 4px 0;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #627d98;
+}
+
+.cal-mngr-popup .cal-mngr-popup-label {
+    font-weight: 700;
+    color: #0a3d80;
+}
+
+.cal-mngr-popup-btn-jogo {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 7px 0;
+    background: #0a3d80;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s;
+}
+.cal-mngr-popup-btn-jogo:hover { background: #052654; }
+
+.cal-mngr-celda span.num-dia {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    border-radius: 50% !important; 
+    font-size: 13px !important;
+    line-height: 1 !important;
+    margin-bottom: 4px;
+    align-self: flex-end;
+    padding: 0 !important; 
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important; 
+}
+
+.dia-hoje {
+    background-color: #0ea5e9 !important; 
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.dia-selecionado { 
+    border: 2px solid #0ea5e9 !important; 
+    background-color: #f0f9ff !important; 
+}
+
+.cal-mngr-popup::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 14px;
+    height: 14px;
+    background: #0a3d80;
+    border: none;
+}
+
+.cal-mngr-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 22px; 
+}
+
+.cal-mngr-toggle input[type="checkbox"] {
+    display: none; 
+}
+
+.toggle-switch {
+    position: relative;
+    width: 42px;
+    height: 22px;
+    background-color: #64748b; 
+    border-radius: 50px;
+    transition: background-color 0.3s;
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.cal-mngr-toggle input[type="checkbox"]:checked + .toggle-switch {
+    background-color: #0ea5e9; 
+}
+
+.cal-mngr-toggle input[type="checkbox"]:checked + .toggle-switch::after {
+    transform: translateX(20px);
+}
+
+.toggle-text {
+    color: #0a3d80;
+    font-size: 13px;
+    font-weight: 600;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .cal-mngr-wrapper {
+        padding: 10px 12px;
+    }
+    .cal-mngr-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    .cal-mngr-title {
+        font-size: 18px;
+    }
+    .cal-mngr-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .cal-mngr-acoes {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .cal-mngr-btn {
+        font-size: 12px;
+        padding: 7px 12px;
+    }
+    .modal-mngr-content {
+        padding: 20px 16px;
+    }
+    .modal-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

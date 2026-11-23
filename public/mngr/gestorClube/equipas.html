@@ -1,0 +1,46 @@
+<div class="breadcrumb">
+  <span class="breadcrumb-current">Equipas</span>
+</div>
+
+<div class="admin-desp-card" style="border: 2px dashed #cbd5e1; background: #f8fafc; margin-bottom: 20px; border-radius: 16px; padding: 24px 28px;">
+  <h3 class="admin-desp-titulo" style="color:#475a6b;">+ Criar Nova Equipa</h3>
+  <form id="form-add-equipa" enctype="multipart/form-data">
+    <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr auto; gap:12px; align-items:flex-end;">
+      <div class="modal-input-group" style="margin:0;">
+        <label>Nome da Equipa</label>
+        <input type="text" id="nome-equipa" name="nome" required class="jogo-input" placeholder="Ex: Sub-19 Masculino A">
+      </div>
+      <div class="modal-input-group" style="margin:0;">
+        <label>Modalidade</label>
+        <select id="sport-select" name="id_tipo_desporto" required class="jogo-input">
+          <option value="">A carregar...</option>
+        </select>
+      </div>
+      <div class="modal-input-group" style="margin:0;">
+        <label>Escalão</label>
+        <select id="escalao-select" name="id_tipo_escalao" required class="jogo-input">
+          <option value="">A carregar...</option>
+        </select>
+      </div>
+      <div class="modal-input-group" style="margin:0;">
+        <label>Foto</label>
+        <div class="file-upload-wrapper">
+          <input type="file" id="foto_file" name="foto_file" class="file-input-hidden" accept="image/png, image/jpeg, image/webp">
+          <label for="foto_file" class="main-input file-upload-label" style="padding: 8px 10px;">
+            <span>Selecionar...</span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn-confirmar" style="white-space:nowrap; align-self:flex-end;">Criar Equipa</button>
+    </div>
+  </form>
+</div>
+
+<div id="modalidades-container">
+  <p style="padding: 20px; color: gray; text-align: center">
+    A carregar equipas...
+  </p>
+</div>
+
+
+<script src="/mngr/js/equipas.js"></script>
