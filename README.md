@@ -39,10 +39,10 @@ npm test
 
 ## Equipa
 
-Desenvolvido pelo Grupo A:
+Desenvolvido pelo grupo:
 
+- Cristiano Saraiva
 - Daniel Morais
 - Filipe Candeias
-- Cristiano Saraiva
 - Gonçalo Fonseca
 - Juan Gonsalves
